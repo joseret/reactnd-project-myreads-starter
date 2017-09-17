@@ -1,20 +1,35 @@
 import React, { Component } from 'react'
 
 class BookMenu extends Component {
+  state = {
+    currentShelf:  "none"
+  }
+
+  handleOnChange = (e) => {
+    e.preventDefault()
+    if (this.props.handleShelfChange) {
+       this.props.handleShelfChange(this.props.book, this.props.book.shelf, e.target.value)
+    }
+  }
+
+
 
   render() {
- 
-    const cssImageUrl = 'url(\'' + this.props.book.imageLinks.smallThumbnail + '\')'
+    console.log('BookMenu-render', this.props)
+    const cssImageUrl = (this.props.book.imageLinks && this.props.book.imageLinks.smallThumbnail) ? 'url(\'' + this.props.book.imageLinks.thumbnail + '\')' : ''
+    const bookValue = this.props.book.shelf|| "none"
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: cssImageUrl  }}></div>
           <div className="book-shelf-changer">
-            <select>
+            <select onChange={this.handleOnChange} value={bookValue} defaultValue="none">
               <option value="none" disabled>Move to...</option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
+              {
+                this.props.shelfList.map((shelfValue) => (
+                  <option value={shelfValue.value} >{shelfValue.name}</option>
+                ))
+              }
               <option value="none">None</option>
             </select>
           </div>

@@ -26,10 +26,8 @@ class ListBooks extends Component {
     //   shelf.name = name
     // }
 
-
-
     render() {
-      console.log('render', this.props.shelves)
+      console.log('ListBooks-render', this.props)
       return (
       <div className="list-books">
         <div className="list-books-title">
@@ -42,6 +40,9 @@ class ListBooks extends Component {
             <BookShelf 
               books={shelf.books} 
               name={shelf.name} 
+              value={shelf.value}
+              shelfList={this.props.shelfList}
+              handleShelfChange={this.props.handleShelfChange}
             />
             ))
 
